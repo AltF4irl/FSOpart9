@@ -8,6 +8,34 @@ interface Stats {
   average: number;
 }
 
+interface Argumentsv2 {
+    target: number,
+    dailyExHours: number[]
+}
+
+const parseArgumentsv2 = (args: string[]): Argumentsv2 => {
+    if (args.length < 4) throw new Error('not enough arguments')
+    
+    const [one, two, t, ...deh] = args
+    const dehToNumbers: number[] = []
+
+    if (!isNaN(Number(t))) {
+        deh.forEach(s => {
+            if (isNaN(Number(s))) {
+                throw new Error('arguments must be numbers')
+            }
+            dehToNumbers.push(Number(s))
+        })
+    } else {
+        throw new Error('arguments must be numbers')
+    }
+
+    return {
+        target: Number(t),
+        dailyExHours: dehToNumbers
+    }
+}
+
 const setAverage = (dailyExerciseHours: number[]): number => {
   let everageExerciseHours: number = 0;
   dailyExerciseHours.forEach((exercise) => {
@@ -72,4 +100,11 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+    const {target, dailyExHours} = parseArgumentsv2(process.argv)
+    console.log(calculateExercises(dailyExHours, target));
+} catch (err: unknown) {
+    if (err instanceof Error) {
+        console.log('Something went wrong:', err.message);
+    }
+}
