@@ -16,7 +16,7 @@ interface Argumentsv2 {
 const parseArgumentsv2 = (args: string[]): Argumentsv2 => {
     if (args.length < 4) throw new Error('not enough arguments')
     
-    const [one, two, t, ...deh] = args
+    const [_one, _two, t, ...deh] = args
     const dehToNumbers: number[] = []
 
     if (!isNaN(Number(t))) {
@@ -55,9 +55,8 @@ const setRating = (dailyExerciseHours: number[], target: number): number => {
     return 1;
   } else if (progression > 0.5 && progression <= 0.85) {
     return 2;
-  } else if (progression > 0.85) {
-    return 3;
   }
+  return 3;
 };
 
 const setRatingDescription = (
@@ -74,6 +73,8 @@ const setRatingDescription = (
     case 3:
       return 'GGs';
   }
+
+  return "is not within scope"
 };
 
 const setTrainingDays = (dailyExerciseHours: number[]): number => {
