@@ -87,7 +87,7 @@ const setTrainingDays = (dailyExerciseHours: number[]): number => {
   return dailyExerciseHours.length - noTrainingDays;
 };
 
-const calculateExercises = (
+export const calculateExercises = (
   dailyExerciseHours: number[],
   target: number
 ): Stats => {
